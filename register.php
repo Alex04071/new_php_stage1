@@ -55,8 +55,7 @@ function display_flash_message($name){
         redirect_to('success');
     }else{
         redirect_to('danger');
-    }
-    
+    } 
 }
 
 function redirect_to($path){
