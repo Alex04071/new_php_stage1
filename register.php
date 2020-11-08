@@ -22,7 +22,7 @@ function get_user_by_email($email){
     }
     mysqli_stmt_close($stmt);
     mysqli_close($conect);
-};
+}
 
 function add_user($mail, $password){
     $conect = mysqli_connect("localhost", "root", "root", "project1") 
@@ -36,7 +36,7 @@ function add_user($mail, $password){
     set_flash_message(session_id(), $message);
     mysqli_stmt_close($stmt);
     mysqli_close($conect);
-};
+}
 
 function set_flash_message($name, $message){
     if($name){
@@ -55,7 +55,7 @@ function display_flash_message($name){
         redirect_to('success');
     }else{
         redirect_to('danger');
-    }
+    } 
 }
 
 function redirect_to($path){
@@ -64,4 +64,4 @@ function redirect_to($path){
     }else{
         header("Location: /page_register.php");
     }
-};
+}
