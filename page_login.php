@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once "function.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,11 +37,7 @@ session_start();
             </a>
         </div>
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-            <?php if(isset($_SESSION['messagen'])):?>
-            <div class="alert alert-<?php echo $_SESSION['style'];?>">
-                <?php echo $_SESSION['messagen'];?>
-            </div>
-            <?php endif; unset($_SESSION['messagen']);?>
+		<?php if(isset($_SESSION['success'])){display_flash_message('success'); unset($_SESSION['success']);} ?>
             <form action="">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>

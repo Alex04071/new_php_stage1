@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once "function.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,11 +63,7 @@ session_start();
                             </div>
                             <div class="col-xl-6 ml-auto mr-auto">
                                 <div class="card p-4 rounded-plus bg-faded">
-                                    <?php if(isset($_SESSION['messagen'])):?>
-                                    <div class="alert alert-<?php echo $_SESSION['style'];?> text-dark" role="alert">
-                                        <strong>Уведомление!</strong> <?php echo $_SESSION['messagen'];?>
-                                    </div>
-                                    <?php endif; unset($_SESSION['messagen']);?>
+								<?php if(isset($_SESSION['danger'])){display_flash_message('danger'); unset($_SESSION['danger']);} ?>
                                     <form id="js-login" novalidate="" action="register.php" method="post">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>
