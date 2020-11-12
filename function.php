@@ -9,6 +9,7 @@ function get_user_by_email($email){
 	return $arr_user;
 }
 function add_user($email, $password){
+	$password = password_hash("$password", PASSWORD_DEFAULT);
 	$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 	$sql = "INSERT INTO users (email, password) VALUES ('$email', '$password')";
 	$result = mysqli_query($connect, $sql);
