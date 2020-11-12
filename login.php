@@ -24,5 +24,5 @@ function login($email, $pass){
 	$user = mysqli_fetch_assoc($result);
 	mysqli_free_result($result);
 	mysqli_close($connect);
-	return password_verify($pass, $user["password"]);
+	return password_verify($pass, $user["password"]); 
 }
