@@ -37,15 +37,19 @@ require_once "function.php";
             </a>
         </div>
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-		<?php if(isset($_SESSION['success'])){display_flash_message('success'); unset($_SESSION['success']);} ?>
-            <form action="">
+        <?php if(isset($_SESSION['success'])){
+                display_flash_message('success'); unset($_SESSION['success']);
+            }elseif(isset($_SESSION['danger'])){
+                display_flash_message('danger'); unset($_SESSION['danger']);
+            }?>
+            <form action="login.php" method="post">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
-                    <input type="email" id="username" class="form-control" placeholder="Эл. адрес" value="">
+                    <input type="email" id="username" class="form-control" placeholder="Эл. адрес" value="" name="email">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="password">Пароль</label>
-                    <input type="password" id="password" class="form-control" placeholder="" >
+                    <input type="password" id="password" class="form-control" placeholder="" name="password">
                 </div>
                 <div class="form-group text-left">
                     <div class="custom-control custom-checkbox">
