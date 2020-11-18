@@ -16,7 +16,6 @@ function get_user_by_email($email, $value = 'user'){
 	$dateUser[] = mysqli_fetch_array($result, MYSQLI_ASSOC);
 	mysqli_free_result($result);
 	mysqli_close($connect);
-	//var_dump($dateUser);die;
 	return $dateUser;
 }
 
@@ -74,37 +73,16 @@ function is_not_loggin_in($email){
 	return $user;
 }
 
-/*function get_users($email, $valueForShow = 'user'){
-	$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
-	if($valueForShow === 'admin'){
-		$sql = "SELECT * FROM `users`";
-
-		$result = mysqli_query($connect, $sql);
-		$dateUser = mysqli_fetch_all($result, MYSQLI_ASSOC);
-	}else{
-		$sql = "SELECT * FROM `users` WHERE `email` = '$email'";
-
-		$result = mysqli_query($connect, $sql);
-		$dateUser[] = mysqli_fetch_array($result, MYSQLI_ASSOC);
-	}
-	mysqli_free_result($result);
-	mysqli_close($connect);
-	return $dateUser;
-}*/
-
-function edit_information($username, $job_title, $phone, $address, $user_id = null){
-	if(!is_null($user_id)){
+function edit_information($username, $job_title, $phone, $address, $user_id){
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "UPDATE `users` SET `fullName` = '$username', `position` = '$job_title', `phone` = '$phone', `address` = $address WHERE `id` = '$user_id'";
 
 		mysqli_query($connect, $sql);
 		mysqli_close($connect);
 		return true;
-	}
-	return false;
 }
 
-function set_status($status, $user_id = null){
+function set_status($status, $user_id){
 	switch ($status) {
 		case '1':
 			$status = 'Онлайн';
@@ -125,12 +103,38 @@ function set_status($status, $user_id = null){
 	mysqli_close($connect);
 }
 
-function add_social_links($vk, $telegram, $instagram, $user_id = null){
-	if(!is_null($user_id)){
+function add_social_links($vk, $telegram, $instagram, $user_id){
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "UPDATE `users` SET `linkVK` = '$vk', `linkTelegram` = '$telegram', `linkInstagram` = '$instagram' WHERE `id` = '$user_id'";
 
 		mysqli_query($connect, $sql);
+		mysqli_close($connect);
+}
+
+function upload_avatar($arr_file, $user_id = null){
+	if(is_uploaded_file($arr_file['tmp_name'])){
+		$dir_images = 'images';
+		if(!is_dir(__DIR__ . '/' . $dir_images)){
+			mkdir(__DIR__ . '/' . $dir_images);
+		}
+
+		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
+		$sql = "SELECT `imgProfil` FROM `users` WHERE `id` = '$user_id'";
+
+		$result = mysqli_query($connect, $sql);
+		$user_img = mysqli_fetch_array($result, MYSQLI_NUM);
+		mysqli_free_result($result);
+		$newLinkImage = '/' . $dir_images . '/' . uniqid($arr_file['name']) . '.jpg';
+
+		if(is_file($user_img[0])){
+			unlink($user_img[0]);
+			copy($arr_file['tmp_name'], __DIR__ . $newLinkImage);
+		}else{
+			copy($arr_file['tmp_name'], __DIR__ . $newLinkImage);
+		}
+		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
+		$sql = "UPDATE `users` SET `imgProfil` = '$newLinkImage' WHERE `id` = '$user_id'";
+		mysqli_query($connect, $sql);
+		mysqli_close($connect);
 	}
-	mysqli_close($connect);
 }
