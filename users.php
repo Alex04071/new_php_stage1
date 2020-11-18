@@ -5,12 +5,7 @@ if(!$user = is_not_loggin_in($_SESSION['email'])){
     set_flash_message('danger', 'Введите email и пароль.');
     redirect_to('page_login.php');
 }
-
-if($user['role'] == 'admin'){
-    $arr_users = get_users($_SESSION['email'], $user['role']);
-}else{
-    $arr_users = get_users($_SESSION['email']);
-}
+$arr_users = get_user_by_email($user['email'], $user['role']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +33,7 @@ if($user['role'] == 'admin'){
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="page_login.html">Войти</a>
+                        <a class="nav-link" href="page_login.php">Войти</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Выйти</a>
@@ -56,8 +51,8 @@ if($user['role'] == 'admin'){
             </div>
             <div class="row">
                 <div class="col-xl-12">
-                    <?php if($user['role']== 'admin'):?>
-                    <a class="btn btn-success" href="create_user.html">Добавить</a>
+                    <?php if($user['role'] === 'admin'):?>
+                    <a class="btn btn-success" href="create_user.php">Добавить</a>
                     <?php endif; ?>
                     <div class="border-faded bg-faded p-3 mb-g d-flex mt-3">
                         <input type="text" id="js-filter-contacts" name="filter-contacts" class="form-control shadow-inset-2 form-control-lg" placeholder="Найти пользователя">
