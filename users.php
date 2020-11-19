@@ -5,7 +5,7 @@ if(!$user = is_not_loggin_in($_SESSION['email'])){
     set_flash_message('danger', 'Введите email и пароль.');
     redirect_to('page_login.php');
 }
-$arr_users = get_user_by_email($user['email'], $user['role']);
+$arr_users = get_user_by_email($user['role'], $user['email']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +36,7 @@ $arr_users = get_user_by_email($user['email'], $user['role']);
                         <a class="nav-link" href="page_login.php">Войти</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Выйти</a>
+                        <a class="nav-link" href="page_login.php">Выйти</a>
                     </li>
                 </ul>
             </div>
@@ -83,7 +83,7 @@ $arr_users = get_user_by_email($user['email'], $user['role']);
                                         <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="edit.html<?php echo '?id=' . $users['id']; ?>">
+                                        <a class="dropdown-item" href="edit.php<?php echo '?id=' . $users['id']; ?>">
                                             <i class="fa fa-edit"></i>
                                         Редактировать</a>
                                         <a class="dropdown-item" href="security.html<?php echo '?id=' . $users['id'];?>">

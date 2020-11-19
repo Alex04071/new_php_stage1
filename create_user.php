@@ -183,7 +183,7 @@ if(!$user = is_not_loggin_in($_SESSION['email'])){
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                        <button class="btn btn-success">Добавить</button>
+                                        <button class="btn btn-success" name="submit_add" value="add">Добавить</button>
                                     </div>
                                 </div>
                             </div>
