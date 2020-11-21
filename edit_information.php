@@ -8,7 +8,7 @@ if(isset($_POST['submit_edit']) && !empty($_POST['submit_edit'])){
 	$phone = $_POST["phone"];
 	$address = $_POST["address"];
 
-	$result = edit_info($id, $username, $job_title, $phone, $address);
+	$result = edit_info($username, $job_title, $phone, $address, $id);
 	if($result){
 		set_flash_message('success', "Данные добавлены.");
 		redirect_to('users.php');

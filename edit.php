@@ -12,7 +12,6 @@ if($user['role'] === 'admin'){
 }else{
     $result = is_author($user['id'], $_GET['id']);
     if(!$result){
-        set_flash_message('danger', 'Ошибка, Вы не можете редактировать чужие данные');
         redirect_to('users.php');
     }else{
         $date_user = get_user_by_id($_GET['id']);
@@ -45,20 +44,15 @@ if($user['role'] === 'admin'){
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="page_login.html">Войти</a>
+                    <a class="nav-link" href="page_login.php">Войти</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Выйти</a>
+                    <a class="nav-link" href="page_login.php">Выйти</a>
                 </li>
             </ul>
         </div>
     </nav>
     <main id="js-page-content" role="main" class="page-content mt-3">
-        <?php if(isset($_SESSION['success'])){
-                display_flash_message('success'); unset($_SESSION['success']);
-            }elseif(isset($_SESSION['danger'])){
-                display_flash_message('danger'); unset($_SESSION['danger']);
-            }?>
         <div class="subheader">
             <h1 class="subheader-title">
                 <i class='subheader-icon fal fa-plus-circle'></i> Редактировать

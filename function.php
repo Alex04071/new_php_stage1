@@ -1,23 +1,23 @@
 <?php
-function get_user_by_email($value = 'user', $email){
+function get_user_by_email($email, $role = 'user'){
 	$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
-	if($value === 'admin'){
+	if($role === 'admin'){
 		$sql = "SELECT * FROM `users`";
 
 		$result = mysqli_query($connect, $sql);
-		$dateUser = mysqli_fetch_all($result, MYSQLI_ASSOC);
+		$date_user = mysqli_fetch_all($result, MYSQLI_ASSOC);
 		mysqli_free_result($result);
 		mysqli_close($connect);
-		return $dateUser;
+		return $date_user;
 	}
 	$sql = "SELECT * FROM `users` WHERE `email` = '$email'";
-
 	$result = mysqli_query($connect, $sql);
-	$dateUser[] = mysqli_fetch_array($result, MYSQLI_ASSOC);
+	$date_user = mysqli_fetch_all($result, MYSQLI_ASSOC);
 	mysqli_free_result($result);
 	mysqli_close($connect);
-	return $dateUser;
+	return $date_user;
 }
+
 
 function add_user($email, $password){
 	$password = password_hash("$password", PASSWORD_DEFAULT);
@@ -31,7 +31,7 @@ function add_user($email, $password){
 		$user = mysqli_fetch_array($result, MYSQLI_ASSOC);
 		mysqli_free_result($result);
 		mysqli_close($connect);
-		return $user['id'];
+		return $user;
 	}
 	mysqli_close($connect);
 	return false;
@@ -56,10 +56,10 @@ function login($email, $pass){
 	$sql = "SELECT `email`, `password` FROM `users` WHERE `email` = '$email'";
 
 	$result = mysqli_query($connect, $sql);
-	$user = mysqli_fetch_assoc($result);
+	$user = mysqli_fetch_array($result, MYSQLI_ASSOC);
 	mysqli_free_result($result);
 	mysqli_close($connect);
-	return password_verify($pass, $user["password"]);
+	return password_verify($pass, $user['password']);
 }
 
 function is_not_loggin_in($email){
@@ -73,7 +73,7 @@ function is_not_loggin_in($email){
 	return $user;
 }
 
-function edit_information($user_id = null, $username, $job_title, $phone, $address){
+function edit_information($username, $job_title, $phone, $address, $user_id = null){
 	if(($user_id && $username && $job_title && $phone && $address) != false){
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "UPDATE `users` SET `fullName` = '$username', `position` = '$job_title', `phone` = '$phone', `address` = $address WHERE `id` = '$user_id'";
@@ -106,7 +106,7 @@ function set_status($status, $user_id){
 	mysqli_close($connect);
 }
 
-function add_social_links($user_id = null, $vk, $telegram, $instagram){
+function add_social_links($vk, $telegram, $instagram, $user_id = null){
 	if(($user_id && $vk && $telegram && $instagram) != false){
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "UPDATE `users` SET `linkVK` = '$vk', `linkTelegram` = '$telegram', `linkInstagram` = '$instagram' WHERE `id` = '$user_id'";
@@ -116,7 +116,7 @@ function add_social_links($user_id = null, $vk, $telegram, $instagram){
 	}
 }
 
-function upload_avatar($user_id = null, $arr_file){
+function upload_avatar($arr_file, $user_id = null){
 	if(is_uploaded_file($arr_file['tmp_name'])){
 		$dir_images = 'images';
 		if(!is_dir(__DIR__ . '/' . $dir_images)){
@@ -162,11 +162,10 @@ function is_author($logged_user_id, $edit_user_id){
 	return false;
 }
 
-function edit_info($user_id = null, $username, $job_title, $phone, $address){
-	if($user_id && $username && $job_title && $phone && $address){
+function edit_info($username, $job_title, $phone, $address, $user_id = null){
+	if($user_id){
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "UPDATE `users` SET `fullName` = '$username', `position` = '$job_title', `phone` = '$phone', `address` = '$address' WHERE `id` = '$user_id'";
-		
 		mysqli_query($connect, $sql);
 		mysqli_close($connect);
 		return true;

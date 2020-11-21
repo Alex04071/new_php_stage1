@@ -16,7 +16,7 @@ if(isset($_POST['submit_add']) && !empty($_POST['submit_add'])){
 
 	if((isset($email) && !empty($email)) && (isset($pass) && !empty($pass))){
 		$existUser = get_user_by_email($email);
-		if(!is_null($existUser[0])){
+		if($existUser){
 			set_flash_message('danger', "$email уже занят.");
 			redirect_to('create_user.php');
 		}else{
@@ -24,11 +24,11 @@ if(isset($_POST['submit_add']) && !empty($_POST['submit_add'])){
 				set_flash_message('danger', "Пользователе не добавлен");
 				redirect_to('create_user.php');
 			}else{
-				$user_id = add_user($email, $password);
-				$edit_result = edit_information($user_id, $username, $job_title, $phone, $address);
-				set_status($user_id, $status);
-				upload_avatar($user_id, $arr_file);
-				add_social_links($user_id, $linkVk, $linkTelegram, $linkInstagram);
+				$user_id = add_user($email, $pass);
+				$edit_result = edit_information($username, $job_title, $phone, $address, $user_id['id']);
+				set_status($status, $user_id['id']);
+				upload_avatar($arr_file, $user_id['id']);
+				add_social_links($linkVk, $linkTelegram, $linkInstagram, $user_id['id']);
 				set_flash_message('success', "Пользователь добавлен");
 				redirect_to('users.php');
 			}

@@ -79,7 +79,7 @@ require_once "function.php";
                                        
                                         <div class="row no-gutters">
                                             <div class="col-md-4 ml-auto text-right">
-                                                <button id="js-login-btn" type="submit" class="btn btn-block btn-danger btn-lg mt-3">Регистрация</button>
+                                                <button id="js-login-btn" type="submit" class="btn btn-block btn-danger btn-lg mt-3" name="register" value="now_register">Регистрация</button>
                                             </div>
                                         </div>
                                     </form>

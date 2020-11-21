@@ -5,7 +5,6 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 $result = login($email, $password);
-
 if($result){
 	$_SESSION['email'] = $email;
 	set_flash_message('success', "Добро пожаловать.");

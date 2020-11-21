@@ -5,7 +5,7 @@ if(!$user = is_not_loggin_in($_SESSION['email'])){
     set_flash_message('danger', 'Введите email и пароль.');
     redirect_to('page_login.php');
 }
-$arr_users = get_user_by_email($user['role'], $user['email']);
+$arr_users = get_user_by_email($user['email'], $user['role']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +43,11 @@ $arr_users = get_user_by_email($user['role'], $user['email']);
         </nav>
 
         <main id="js-page-content" role="main" class="page-content mt-3">
-        <?php if(isset($_SESSION['success'])){display_flash_message('success'); unset($_SESSION['success']);} ?>
+        <?php if(isset($_SESSION['success'])){
+                display_flash_message('success'); unset($_SESSION['success']);
+            }elseif(isset($_SESSION['danger'])){
+                display_flash_message('danger'); unset($_SESSION['danger']);
+            }?>
             <div class="subheader">
                 <h1 class="subheader-title">
                     <i class='subheader-icon fal fa-users'></i> Список пользователей
@@ -83,6 +87,9 @@ $arr_users = get_user_by_email($user['role'], $user['email']);
                                         <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                                     </a>
                                     <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="profil.php<?php echo '?id=' . $users['id']; ?>">
+                                            <i class="fa fa-heart"></i>
+                                        Профиль</a>
                                         <a class="dropdown-item" href="edit.php<?php echo '?id=' . $users['id']; ?>">
                                             <i class="fa fa-edit"></i>
                                         Редактировать</a>
