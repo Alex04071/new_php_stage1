@@ -73,25 +73,14 @@ function is_not_loggin_in($email){
 	return $user;
 }
 
-function set_status($status, $user_id){
-	switch ($status) {
-		case '1':
-			$status = 'Онлайн';
-			break;
-		case '2':
-			$status = 'Отошел';
-			break;
-		case '3':
-			$status = 'Не беспокоить';
-			break;
-	}
-	if(!is_null($user_id)){
+function set_status($status, $user_id = null){
+	if($user_id){
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "UPDATE `users` SET `status` = '$status' WHERE `id` = '$user_id'";
 
-		mysqli_query($connect, $sql);
+		return mysqli_query($connect, $sql);
 	}
-	mysqli_close($connect);
+	return mysqli_close($connect);
 }
 
 function add_social_links($vk, $telegram, $instagram, $user_id = null){
@@ -105,11 +94,11 @@ function add_social_links($vk, $telegram, $instagram, $user_id = null){
 }
 
 function upload_avatar($arr_file, $user_id = null){
-	if(is_uploaded_file($arr_file['tmp_name'])){
 		$dir_images = 'images';
 		if(!is_dir(__DIR__ . '/' . $dir_images)){
 			mkdir(__DIR__ . '/' . $dir_images);
 		}
+	if(is_uploaded_file($arr_file['tmp_name'])){
 
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "SELECT `imgProfil` FROM `users` WHERE `id` = '$user_id'";
@@ -125,6 +114,12 @@ function upload_avatar($arr_file, $user_id = null){
 		}else{
 			copy($arr_file['tmp_name'], __DIR__ . $newLinkImage);
 		}
+		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
+		$sql = "UPDATE `users` SET `imgProfil` = '$newLinkImage' WHERE `id` = '$user_id'";
+		mysqli_query($connect, $sql);
+		mysqli_close($connect);
+	}else{
+		$newLinkImage = '/img/demo/avatars/avatar-m.png';
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "UPDATE `users` SET `imgProfil` = '$newLinkImage' WHERE `id` = '$user_id'";
 		mysqli_query($connect, $sql);

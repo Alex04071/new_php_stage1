@@ -116,9 +116,9 @@ if(!$user = is_not_loggin_in($_SESSION['email'])){
                                 <div class="form-group">
                                     <label class="form-label" for="example-select">Выберите статус</label>
                                     <select class="form-control" id="example-select" name="status">
-                                        <option value="1">Онлайн</option>
-                                        <option value="2">Отошел</option>
-                                        <option value="3">Не беспокоить</option>
+                                        <option value="online">Онлайн</option>
+                                        <option value="away">Отошел</option>
+                                        <option value="do not disturb">Не беспокоить</option>
                                     </select>
                                 </div>
 

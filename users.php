@@ -74,7 +74,7 @@ $arr_users = get_user_by_email($user['email'], $user['role']);
             <div class="row" id="js-contacts">
             <?php foreach($arr_users as $users){?>
                 <div class="col-xl-4">
-                    <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
+                    <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="<?php echo $users['fullName'];?>">
                         <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
                             <div class="d-flex flex-row align-items-center">
                                 <span class="status status-success mr-3">
@@ -96,7 +96,7 @@ $arr_users = get_user_by_email($user['email'], $user['role']);
                                         <a class="dropdown-item" href="security.php<?php echo '?id=' . $users['id'];?>">
                                             <i class="fa fa-lock"></i>
                                         Безопасность</a>
-                                        <a class="dropdown-item" href="status.html<?php echo '?id=' . $users['id'];?>">
+                                        <a class="dropdown-item" href="status.php<?php echo '?id=' . $users['id'];?>">
                                             <i class="fa fa-sun"></i>
                                         Установить статус</a>
                                         <a class="dropdown-item" href="media.html<?php echo '?id=' . $users['id'];?>">
