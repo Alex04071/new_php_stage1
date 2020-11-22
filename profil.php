@@ -7,10 +7,14 @@ if(!$user = is_not_loggin_in($_SESSION['email'])){
 }
 if($user['role'] === 'admin'){
     $date_user = get_user_by_id($_GET['id']);
+    if(!$date_user[0]){
+        set_flash_message('danger', 'Нет такого пользователя');
+        redirect_to('users.php');
+    }
 }else{
     $result = is_author($user['id'], $_GET['id']);
     if(!$result){
-        set_flash_message('danger', 'Ошибка, Вы не можете смотреть чужой профиль');
+        set_flash_message('danger', 'Вы не можете смотреть чужой профиль');
         redirect_to('users.php');
     }else{
         $date_user = get_user_by_id($_GET['id']);
@@ -54,6 +58,11 @@ if($user['role'] === 'admin'){
             </div>
         </nav>
         <main id="js-page-content" role="main" class="page-content mt-3">
+        <?php if(isset($_SESSION['success'])){
+                display_flash_message('success'); unset($_SESSION['success']);
+            }elseif(isset($_SESSION['danger'])){
+                display_flash_message('danger'); unset($_SESSION['danger']);
+        }?>
             <div class="subheader">
                 <h1 class="subheader-title">
                     <i class='subheader-icon fal fa-users'></i> Профиль пользователя

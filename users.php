@@ -93,7 +93,7 @@ $arr_users = get_user_by_email($user['email'], $user['role']);
                                         <a class="dropdown-item" href="edit.php<?php echo '?id=' . $users['id']; ?>">
                                             <i class="fa fa-edit"></i>
                                         Редактировать</a>
-                                        <a class="dropdown-item" href="security.html<?php echo '?id=' . $users['id'];?>">
+                                        <a class="dropdown-item" href="security.php<?php echo '?id=' . $users['id'];?>">
                                             <i class="fa fa-lock"></i>
                                         Безопасность</a>
                                         <a class="dropdown-item" href="status.html<?php echo '?id=' . $users['id'];?>">

@@ -5,7 +5,6 @@ if(!$user = is_not_loggin_in($_SESSION['email'])){
     set_flash_message('danger', 'Введите email и пароль.');
     redirect_to('page_login.php');
 }
-
 if($user['role'] === 'admin'){
     $date_user = get_user_by_id($_GET['id']);
     if(!$date_user[0]){
@@ -13,6 +12,8 @@ if($user['role'] === 'admin'){
         redirect_to('users.php');
     }
     $_SESSION['id'] = $_GET['id'];
+    $_SESSION['id_admin'] = $user['id'];
+    $_SESSION['role'] = $user['role'];
 }else{
     $result = is_author($user['id'], $_GET['id']);
     if(!$result){
@@ -21,6 +22,7 @@ if($user['role'] === 'admin'){
     }else{
         $date_user = get_user_by_id($_GET['id']);
         $_SESSION['id'] = $_GET['id'];
+        $_SESSION['role'] = $user['role'];
     }
 }
 ?>
@@ -28,7 +30,7 @@ if($user['role'] === 'admin'){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Безопаность</title>
     <meta name="description" content="Chartist.html">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
@@ -58,50 +60,53 @@ if($user['role'] === 'admin'){
         </div>
     </nav>
     <main id="js-page-content" role="main" class="page-content mt-3">
+        <?php if(isset($_SESSION['success'])){
+                display_flash_message('success'); unset($_SESSION['success']);
+            }elseif(isset($_SESSION['danger'])){
+                display_flash_message('danger'); unset($_SESSION['danger']);
+        }?>
         <div class="subheader">
             <h1 class="subheader-title">
-                <i class='subheader-icon fal fa-plus-circle'></i> Редактировать
+                <i class='subheader-icon fal fa-lock'></i> Безопасность
             </h1>
+
         </div>
-        <form action="edit_information.php" method="post">
+        <form action="edit_security.php" method="post">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
                         <div class="panel-container">
                             <div class="panel-hdr">
-                                <h2>Общая информация</h2>
+                                <h2>Обновление эл. адреса и пароля</h2>
                             </div>
+                            <?php foreach($date_user as $users){?>
                             <div class="panel-content">
-                                <?php foreach ($date_user as $value) { ?>
-                                <!-- username -->
+                                <!-- email -->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Имя</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="<?php echo $value['fullName'];?>" name="name">
+                                    <label class="form-label" for="simpleinput">Email</label>
+                                    <input type="text" id="simpleinput" class="form-control" value="<?php echo $users['email'];?>" name="email">
                                 </div>
 
-                                <!-- title -->
+                                <!-- password -->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Место работы</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="<?php echo $value['position'];?>" name="job">
+                                    <label class="form-label" for="simpleinput">Пароль</label>
+                                    <input type="password" id="simpleinput" class="<?php echo $users['password'];?>" name="password">
                                 </div>
 
-                                <!-- tel -->
+                                <!-- password confirmation-->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Номер телефона</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="<?php echo $value['phone'];?>" name="phone">
+                                    <label class="form-label" for="simpleinput">Подтверждение пароля</label>
+                                    <input type="password" id="simpleinput" class="form-control" name="repeat_password">
                                 </div>
 
-                                <!-- address -->
-                                <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Адрес</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="<?php echo $value['address'];?>" name="address">
-                                </div>
-                            <?php } ?>
+
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                    <button class="btn btn-warning" name="submit_edit" value="edit">Редактировать</button>
+                                    <button class="btn btn-warning" name="submit_edit" value="edit">Изменить</button>
                                 </div>
                             </div>
+                            <?php } ?>
                         </div>
+                        
                     </div>
                 </div>
             </div>

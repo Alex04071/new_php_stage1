@@ -73,18 +73,6 @@ function is_not_loggin_in($email){
 	return $user;
 }
 
-function edit_information($username, $job_title, $phone, $address, $user_id = null){
-	if(($user_id && $username && $job_title && $phone && $address) != false){
-		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
-		$sql = "UPDATE `users` SET `fullName` = '$username', `position` = '$job_title', `phone` = '$phone', `address` = $address WHERE `id` = '$user_id'";
-
-		mysqli_query($connect, $sql);
-		mysqli_close($connect);
-		return true;
-	}
-	return false;
-}
-
 function set_status($status, $user_id){
 	switch ($status) {
 		case '1':
@@ -166,6 +154,18 @@ function edit_info($username, $job_title, $phone, $address, $user_id = null){
 	if($user_id){
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "UPDATE `users` SET `fullName` = '$username', `position` = '$job_title', `phone` = '$phone', `address` = '$address' WHERE `id` = '$user_id'";
+		mysqli_query($connect, $sql);
+		mysqli_close($connect);
+		return true;
+	}
+	return false;
+}
+
+function edit_credentials($email, $password, $user_id = null){
+	if($user_id){
+		$password = password_hash("$password", PASSWORD_DEFAULT);
+		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
+		$sql = "UPDATE `users` SET `email` = '$email', `password` = '$password' WHERE `id` = '$user_id'";
 		mysqli_query($connect, $sql);
 		mysqli_close($connect);
 		return true;

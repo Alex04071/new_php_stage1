@@ -25,7 +25,7 @@ if(isset($_POST['submit_add']) && !empty($_POST['submit_add'])){
 				redirect_to('create_user.php');
 			}else{
 				$user_id = add_user($email, $pass);
-				$edit_result = edit_information($username, $job_title, $phone, $address, $user_id['id']);
+				$edit_result = edit_info($username, $job_title, $phone, $address, $user_id['id']);
 				set_status($status, $user_id['id']);
 				upload_avatar($arr_file, $user_id['id']);
 				add_social_links($linkVk, $linkTelegram, $linkInstagram, $user_id['id']);
