@@ -94,10 +94,10 @@ function add_social_links($vk, $telegram, $instagram, $user_id = null){
 }
 
 function upload_avatar($arr_file, $user_id = null){
-		$dir_images = 'images';
-		if(!is_dir(__DIR__ . '/' . $dir_images)){
-			mkdir(__DIR__ . '/' . $dir_images);
-		}
+	$dir_images = 'images';
+	if(!is_dir(__DIR__ . '/' . $dir_images)){
+		mkdir(__DIR__ . '/' . $dir_images);
+	}
 	if(is_uploaded_file($arr_file['tmp_name'])){
 
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
@@ -118,13 +118,9 @@ function upload_avatar($arr_file, $user_id = null){
 		$sql = "UPDATE `users` SET `imgProfil` = '$newLinkImage' WHERE `id` = '$user_id'";
 		mysqli_query($connect, $sql);
 		mysqli_close($connect);
-	}else{
-		$newLinkImage = '/img/demo/avatars/avatar-m.png';
-		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
-		$sql = "UPDATE `users` SET `imgProfil` = '$newLinkImage' WHERE `id` = '$user_id'";
-		mysqli_query($connect, $sql);
-		mysqli_close($connect);
+		return true;
 	}
+	return false;
 }
 
 function get_user_by_id($id){
@@ -163,6 +159,13 @@ function edit_credentials($email, $password, $user_id = null){
 		$sql = "UPDATE `users` SET `email` = '$email', `password` = '$password' WHERE `id` = '$user_id'";
 		mysqli_query($connect, $sql);
 		mysqli_close($connect);
+		return true;
+	}
+	return false;
+}
+
+function has_image($user_id, $image){
+	if(isset($user_id) && isset($image)){
 		return true;
 	}
 	return false;

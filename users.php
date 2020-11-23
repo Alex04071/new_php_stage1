@@ -99,7 +99,7 @@ $arr_users = get_user_by_email($user['email'], $user['role']);
                                         <a class="dropdown-item" href="status.php<?php echo '?id=' . $users['id'];?>">
                                             <i class="fa fa-sun"></i>
                                         Установить статус</a>
-                                        <a class="dropdown-item" href="media.html<?php echo '?id=' . $users['id'];?>">
+                                        <a class="dropdown-item" href="media.php<?php echo '?id=' . $users['id'];?>">
                                             <i class="fa fa-camera"></i>
                                             Загрузить аватар
                                         </a>
