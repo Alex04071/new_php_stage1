@@ -99,17 +99,17 @@ function upload_avatar($arr_file, $user_id = null){
 		mkdir(__DIR__ . '/' . $dir_images);
 	}
 	if(is_uploaded_file($arr_file['tmp_name'])){
-
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "SELECT `imgProfil` FROM `users` WHERE `id` = '$user_id'";
 
 		$result = mysqli_query($connect, $sql);
 		$user_img = mysqli_fetch_array($result, MYSQLI_NUM);
 		mysqli_free_result($result);
-		$newLinkImage = '/' . $dir_images . '/' . uniqid($arr_file['name']) . '.jpg';
 
-		if(is_file($user_img[0])){
-			unlink($user_img[0]);
+		$newLinkImage = '/' . $dir_images . '/' . uniqid($arr_file['name']) . '.jpg';
+		
+		if(file_exists(__DIR__ .$user_img[0])){
+			unlink(__DIR__.$user_img[0]);
 			copy($arr_file['tmp_name'], __DIR__ . $newLinkImage);
 		}else{
 			copy($arr_file['tmp_name'], __DIR__ . $newLinkImage);
