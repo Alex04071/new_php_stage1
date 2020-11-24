@@ -107,13 +107,16 @@ function upload_avatar($arr_file, $user_id = null){
 		mysqli_free_result($result);
 
 		$newLinkImage = '/' . $dir_images . '/' . uniqid($arr_file['name']) . '.jpg';
-		
-		if(file_exists(__DIR__ .$user_img[0])){
-			unlink(__DIR__.$user_img[0]);
-			copy($arr_file['tmp_name'], __DIR__ . $newLinkImage);
-		}else{
-			copy($arr_file['tmp_name'], __DIR__ . $newLinkImage);
+		if($user_img[0]){
+			$image = __DIR__ . $user_img[0];
+			if(file_exists($image)){
+				unlink($image);
+				copy($arr_file['tmp_name'], __DIR__ . $newLinkImage);
+			}else{
+				copy($arr_file['tmp_name'], __DIR__ . $newLinkImage);
+			}
 		}
+		copy($arr_file['tmp_name'], __DIR__ . $newLinkImage);
 		$connect = mysqli_connect("localhost", "root", "root", "projectphp1");
 		$sql = "UPDATE `users` SET `imgProfil` = '$newLinkImage' WHERE `id` = '$user_id'";
 		mysqli_query($connect, $sql);
@@ -165,7 +168,19 @@ function edit_credentials($email, $password, $user_id = null){
 }
 
 function has_image($user_id, $image){
-	if(isset($user_id) && isset($image)){
+	if(isset($user_id) && !empty($image)){
+		return true;
+	}
+	return false;
+}
+
+function delete($user_id){
+	if(isset($user_id)){
+		$connect = mysqli_connect('localhost', 'root', 'root', 'projectphp1');
+		$sql = "DELETE FROM `users` WHERE `id` = '$user_id'";
+
+		mysqli_query($connect, $sql);
+		mysqli_close($connect);
 		return true;
 	}
 	return false;

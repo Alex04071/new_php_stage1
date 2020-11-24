@@ -24,7 +24,7 @@ $arr_users = get_user_by_email($user['email'], $user['role']);
 </head>
     <body class="mod-bg-1 mod-nav-link">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-primary-gradient">
-            <a class="navbar-brand d-flex align-items-center fw-500" href="users.html"><img alt="logo" class="d-inline-block align-top mr-2" src="img/logo.png"> Учебный проект</a> <button aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarColor02" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+            <a class="navbar-brand d-flex align-items-center fw-500" href="users.php"><img alt="logo" class="d-inline-block align-top mr-2" src="img/logo.png"> Учебный проект</a> <button aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarColor02" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarColor02">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
@@ -103,7 +103,7 @@ $arr_users = get_user_by_email($user['email'], $user['role']);
                                             <i class="fa fa-camera"></i>
                                             Загрузить аватар
                                         </a>
-                                        <a href="<?php echo '?id=' . $users['id'];?>" class="dropdown-item" onclick="return confirm('are you sure?');">
+                                        <a href="delete.php<?php echo '?id=' . $users['id'];?>" class="dropdown-item" onclick="return confirm('are you sure?');">
                                             <i class="fa fa-window-close"></i>
                                             Удалить
                                         </a>
